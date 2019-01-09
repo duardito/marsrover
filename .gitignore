@@ -1,2 +1,5 @@
 /.idea
 /*.iml
+/target/classes/org/newrelic/*.class
+/target/classes/org/newrelic/domain
+/target/test-classes/org/newrelic/*.class
