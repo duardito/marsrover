@@ -3,10 +3,10 @@ package org.newrelic.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MoveRobotService {
+public class MoveRobotService implements IMoveRobot{
 
-
-    public List<Response> moveRobotsOverMars(String inputData) throws Exception {
+    @Override
+    public List<Response> moveRobotsOverMars(String inputData){
 
         final String[] snippetWithGrid = snippetsFrom(inputData);
         final PlateauBuilder plateauBuilder = plateauBuilderFrom(snippetWithGrid);
@@ -40,7 +40,7 @@ public class MoveRobotService {
         return input.substring(snippetWithGrid[0].length() + snippetWithGrid[1].length() + 2);
     }
 
-    private PlateauBuilder plateauBuilderFrom(String[] snippetWithGrid) throws Exception {
+    private PlateauBuilder plateauBuilderFrom(String[] snippetWithGrid) {
         return new PlateauBuilder(snippetWithGrid);
     }
 }

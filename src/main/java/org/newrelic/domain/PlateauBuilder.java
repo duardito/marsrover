@@ -4,8 +4,12 @@ public class PlateauBuilder {
 
     private Plateau plateau;
 
-    public PlateauBuilder(String[] snippetWithGrid) throws Exception {
-        this.plateau = new Plateau(Integer.parseInt(snippetWithGrid[0]), Integer.parseInt(snippetWithGrid[1]));
+    public PlateauBuilder(String[] snippetWithGrid) {
+        try {
+            this.plateau = new Plateau(Integer.parseInt(snippetWithGrid[0]), Integer.parseInt(snippetWithGrid[1]));
+        } catch (Exception e) {
+
+        }
     }
 
     public Plateau getPlateau() {

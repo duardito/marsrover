@@ -1,0 +1,45 @@
+<html>
+<head>
+  <style>
+    textarea {
+      width: 300px;
+      height: 150px;
+    }
+  </style>
+<script   src="https://code.jquery.com/jquery-2.2.4.min.js"   integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="   crossorigin="anonymous"></script>
+<script type="text/javascript">
+    function send() {
+        $.ajax({
+            url: 'http://localhost:15000/move',
+            type: 'post',
+			         contentType: "application/x-www-form-urlencoded",
+			            data: {
+                            moves:$('textarea[name=moves]').val(),
+                            },
+            success: function (data) {
+
+              var response = JSON.parse(data);
+                document.getElementById("movements").value=response;
+            },
+			error:function(data){
+				console.log(data);
+			}
+        });
+    }
+
+</script>
+
+</head>
+<body>
+<form id="contactForm1" method="POST" onsubmit="return send();">
+  Movements:<br>
+  <textarea id="moves" name="moves"></textarea>
+  <input type="button" onclick="send();" value="send"><br>
+  Response:<br>
+  <textarea id="movements"></textarea>
+
+</form>
+
+</body>
+
+</html>

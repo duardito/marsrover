@@ -31,7 +31,7 @@ public class Move {
         this.getRobot().getPosition().setY(this.getRobot().getPosition().getY() - 1);
     }
 
-    public void moveRobotWithOperations(String operations) throws Exception {
+    public void moveRobotWithOperations(String operations) {
         OperationsRegister operationsRegister = new OperationsRegister();
         for (int k = 0; k < operations.length(); k++) {
             final String operation = String.valueOf(operations.charAt(k));

@@ -8,7 +8,7 @@ import org.newrelic.domain.movements.MoveRobotRegister;
 public class OperationToForward implements IOperationHandler {
 
     @Override
-    public boolean validateOperation(Move move) throws Exception {
+    public boolean validateOperation(Move move)  {
 
         int posX = move.getRobot().getPosition().getX();
         int posY = move.getRobot().getPosition().getY();
@@ -17,7 +17,11 @@ public class OperationToForward implements IOperationHandler {
         int posXTableu = move.getPlateau().getX();
         int posYTableu = move.getPlateau().getY();
 
-        validatePositions(posX, posY, orientation, posXTableu, posYTableu);
+        try {
+            validatePositions(posX, posY, orientation, posXTableu, posYTableu);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         MoveRobotRegister moveRobotRegister = new MoveRobotRegister();
         IMoveRobotHandler iMoveRobotHandler = moveRobotRegister.handle().get(orientation);
