@@ -38,8 +38,6 @@ public class Move {
             IOperationHandler operationHandler = operationsRegister.handle().get(operation);
             operationHandler.validateOperation(this);
         }
-
-
     }
 
     public static Move buildMove(Plateau plateau, Snippet snippet) {
