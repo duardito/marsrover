@@ -19,9 +19,7 @@ public class MoveRobotService {
         int snippetCounter = 0;
         while (snippetCounter < snippets.size()) {
 
-            final List<String> dataToBuildSnippets = snippetBuilder.getDataToBuildSnippets();
-
-            final Snippet snippet = Snippet.buildSnippetFromValues(snippetCounter, dataToBuildSnippets);
+            final Snippet snippet = Snippet.buildSnippetFromValues(snippetCounter, snippets);
 
             final Move move = Move.buildMove(plateauBuilder.getPlateau(), snippet);
 

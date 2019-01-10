@@ -3,7 +3,7 @@ package org.newrelic.domain;
 public class Position {
 
     private int x;
-    private  int y;
+    private int y;
 
     public Position(int x, int y) {
         this.x = x;
