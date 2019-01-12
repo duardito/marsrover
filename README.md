@@ -15,7 +15,8 @@ There is a test class to validate some cases, not all possible cases are validat
 **Considerations**:
 there are 2 classes (OperationToLeft and OperationToRight) wich include an ugly if-else, 
 I didn't refactor as other places like OperationsRegister or CardinalRegister because 
-I consider this operations can not be modified or added more, if we consider more operations like 
+I consider this operations can not be modified or added more at this point because we can only move
+to north, east, west or south, if we consider more operations like 
 'NE', 'SE', etc... maybe we should think other approach. 
 
  
