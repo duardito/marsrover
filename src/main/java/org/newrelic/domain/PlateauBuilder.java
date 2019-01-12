@@ -8,7 +8,7 @@ public class PlateauBuilder {
         try {
             this.plateau = new Plateau(Integer.parseInt(snippetWithGrid[0]), Integer.parseInt(snippetWithGrid[1]));
         } catch (Exception e) {
-
+            this.plateau = null;
         }
     }
 

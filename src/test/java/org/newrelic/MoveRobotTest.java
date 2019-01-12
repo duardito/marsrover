@@ -29,7 +29,15 @@ public class MoveRobotTest {
     }
 
     @Test
-    public void move_one_mars_rover() {
+    public void should_not_move_mars_rover_wrong_grid_character() {
+
+        String input="X 5 1 2 N LMLMLMLMM";
+        List<Response> response = moveRobotService.moveRobotsOverMars(input);
+        Assert.assertEquals(response.size(),0);
+    }
+
+    @Test
+    public void should_move_one_mars_rover() {
 
         String input="5 5 1 2 N LMLMLMLMM";
         List<Response> response = moveRobotService.moveRobotsOverMars(input);

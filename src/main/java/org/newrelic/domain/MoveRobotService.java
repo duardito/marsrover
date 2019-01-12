@@ -8,14 +8,18 @@ public class MoveRobotService implements IMoveRobot {
     @Override
     public List<Response> moveRobotsOverMars(String inputData) {
 
+        final List<Response> response = new ArrayList<>(0);
         final String[] snippetWithAllInFormation = snippetsFrom(inputData);
         final PlateauBuilder plateauBuilder = new PlateauBuilder(snippetWithAllInFormation);
+        if(plateauBuilder.getPlateau() == null){
+            return response;
+        }
         final String snippetsWithoutGrid = snippetsFrom(inputData, snippetWithAllInFormation);
 
         final SnippetBuilder snippetBuilder = new SnippetBuilder(snippetsWithoutGrid);
         final List<String> snippets = snippetBuilder.getDataToBuildSnippets();
 
-        final List<Response> response = new ArrayList<>(0);
+
         int snippetCounter = 0;
         while (snippetCounter < snippets.size()) {
 
