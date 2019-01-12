@@ -4,7 +4,6 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.newrelic.domain.IMoveRobot;
 import org.newrelic.domain.MoveRobotService;
-import org.newrelic.domain.Plateau;
 import org.newrelic.domain.Response;
 
 import java.util.List;
@@ -18,14 +17,20 @@ public class MoveRobotTest {
         moveRobotService = new MoveRobotService();
     }
 
-    @Test(expected = Exception.class)
-    public void fail_when_grid_has_negative_x_values() throws Exception {
-        new Plateau(-1, 2);
+    @Test
+    public void should_not_move_mars_rover_negative_y_value() {
+
+        String input="1 -5 1 2 N LMLMLMLMM";
+        List<Response> response = moveRobotService.moveRobotsOverMars(input);
+        Assert.assertEquals(response.size(),0);
     }
 
-    @Test(expected = Exception.class)
-    public void fail_when_grid_has_negative_y_values() throws Exception {
-        new Plateau(3, -2);
+    @Test
+    public void should_not_move_mars_rover_negative_x_value() {
+
+        String input="-1 5 1 2 N LMLMLMLMM";
+        List<Response> response = moveRobotService.moveRobotsOverMars(input);
+        Assert.assertEquals(response.size(),0);
     }
 
     @Test

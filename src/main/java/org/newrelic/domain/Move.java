@@ -42,8 +42,7 @@ public class Move {
         for (int k = 0; k < operations.length(); k++) {
             final String operation = String.valueOf(operations.charAt(k));
 
-            boolean isValidOrientation = OperationValidator.validate(operation);
-            if (!isValidOrientation) {
+            if (!validate(operation)) {
                 return false;
             }
 
@@ -55,13 +54,6 @@ public class Move {
         }
         return true;
     }
-
-    private Move(Robot robot, Plateau plateau) {
-        this.robot = robot;
-        this.plateau = plateau;
-        orientation = robot.getCardinal().getOrientation();
-    }
-
 
     public void changeOrientationToWest() {
         this.orientation = Contants.WEST;
@@ -89,5 +81,15 @@ public class Move {
 
     public String getOrientation() {
         return orientation;
+    }
+
+    private boolean validate(String operation){
+        return OperationValidator.validate(operation);
+    }
+
+    private Move(Robot robot, Plateau plateau) {
+        this.robot = robot;
+        this.plateau = plateau;
+        orientation = robot.getCardinal().getOrientation();
     }
 }

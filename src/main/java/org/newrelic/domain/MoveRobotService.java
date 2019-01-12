@@ -19,7 +19,6 @@ public class MoveRobotService implements IMoveRobot {
         final SnippetBuilder snippetBuilder = new SnippetBuilder(snippetsWithoutGrid);
         final List<String> snippets = snippetBuilder.getDataToBuildSnippets();
 
-
         int snippetCounter = 0;
         while (snippetCounter < snippets.size()) {
 
