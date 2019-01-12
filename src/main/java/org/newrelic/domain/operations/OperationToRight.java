@@ -3,10 +3,10 @@ package org.newrelic.domain.operations;
 import org.newrelic.domain.Contants;
 import org.newrelic.domain.Move;
 
-public class OrientationToRight implements IOperationHandler {
+public class OperationToRight implements IOperationHandler {
 
     @Override
-    public boolean validateOperation(Move move) {
+    public boolean executeOperation(Move move) {
 
         final String orientation = move.getOrientation();
 

@@ -1,5 +1,7 @@
 package org.newrelic.domain;
 
+import org.newrelic.domain.movements.CardinalValidator;
+
 import java.util.List;
 
 public class Snippet {
@@ -9,7 +11,25 @@ public class Snippet {
     private String cardinal;
     private String operations;
 
-    public Snippet(int x, int y, String cardinal, String operations) {
+    public static Snippet build(int m, List<String> value) {
+        Integer x = Integer.parseInt(value.get(m));
+        Integer y = Integer.parseInt(value.get(m + 1));
+        String cardinal = value.get(m + 2);
+        boolean isValidCardinal = CardinalValidator.validate(cardinal);
+        if (!isValidCardinal) {
+            return null;
+        }
+        String operations = null;
+        try {
+            operations = value.get(m + 3);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return null;
+        }
+
+        return new Snippet(x, y, cardinal, operations);
+    }
+
+    private Snippet(int x, int y, String cardinal, String operations) {
         this.x = x;
         this.y = y;
         this.cardinal = cardinal;
@@ -32,12 +52,6 @@ public class Snippet {
         return operations;
     }
 
-    public static Snippet buildSnippetFromValues(int m, List<String> value) {
-        Integer x = Integer.parseInt(value.get(m));
-        Integer y = Integer.parseInt(value.get(m + 1));
-        String cardinal1 = value.get(m + 2);
-        String operations1 = value.get(m + 3);
 
-        return new Snippet(x, y, cardinal1, operations1);
-    }
 }
+

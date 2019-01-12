@@ -3,34 +3,39 @@ package org.newrelic.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MoveRobotService implements IMoveRobot{
+public class MoveRobotService implements IMoveRobot {
 
     @Override
-    public List<Response> moveRobotsOverMars(String inputData){
+    public List<Response> moveRobotsOverMars(String inputData) {
 
-        final String[] snippetWithGrid = snippetsFrom(inputData);
-        final PlateauBuilder plateauBuilder = plateauBuilderFrom(snippetWithGrid);
+        final String[] snippetWithAllInFormation = snippetsFrom(inputData);
+        final PlateauBuilder plateauBuilder = new PlateauBuilder(snippetWithAllInFormation);
+        final String snippetsWithoutGrid = snippetsFrom(inputData, snippetWithAllInFormation);
 
-        final String onlySnippets = snippetsFrom(inputData, snippetWithGrid);
-        final SnippetBuilder snippetBuilder = new SnippetBuilder(onlySnippets);
+        final SnippetBuilder snippetBuilder = new SnippetBuilder(snippetsWithoutGrid);
         final List<String> snippets = snippetBuilder.getDataToBuildSnippets();
 
-        final List<Response> responses = new ArrayList<>(0);
+        final List<Response> response = new ArrayList<>(0);
         int snippetCounter = 0;
         while (snippetCounter < snippets.size()) {
 
-            final Snippet snippet = Snippet.buildSnippetFromValues(snippetCounter, snippets);
+            final Snippet snippet = Snippet.build(snippetCounter, snippets);
+            if (snippet == null) {
+                break;
+            }
 
-            final Move move = Move.buildMove(plateauBuilder.getPlateau(), snippet);
-
-            move.moveRobotWithOperations(snippet.getOperations());
-            responses.add(new Response(move));
-
+            final Move move = Move.build(plateauBuilder.getPlateau(), snippet);
+            if (move == null) {
+                break;
+            }
+            if (!move.moveRobotWith(snippet.getOperations())) {
+                break;
+            }
+            response.add(new Response(move));
             snippetCounter = snippetCounter + 4;
         }
-        return responses;
+        return response;
     }
-
 
     private String[] snippetsFrom(String partial) {
         return partial.split("\\s+");
@@ -40,7 +45,4 @@ public class MoveRobotService implements IMoveRobot{
         return input.substring(snippetWithGrid[0].length() + snippetWithGrid[1].length() + 2);
     }
 
-    private PlateauBuilder plateauBuilderFrom(String[] snippetWithGrid) {
-        return new PlateauBuilder(snippetWithGrid);
-    }
 }

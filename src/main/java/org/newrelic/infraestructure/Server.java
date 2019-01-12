@@ -14,7 +14,5 @@ public class Server {
         server.start();
     }
 
-    public static void stopServer() throws IOException {
-        server.stop(1);
-    }
+
 }

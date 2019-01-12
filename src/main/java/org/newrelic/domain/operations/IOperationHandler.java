@@ -4,6 +4,6 @@ import org.newrelic.domain.Move;
 
 public interface IOperationHandler {
 
-    boolean validateOperation(Move move) ;
+    boolean executeOperation(Move move) ;
 
 }

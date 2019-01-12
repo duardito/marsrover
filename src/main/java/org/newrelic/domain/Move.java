@@ -2,6 +2,7 @@ package org.newrelic.domain;
 
 import org.newrelic.domain.operations.IOperationHandler;
 import org.newrelic.domain.operations.OperationsRegister;
+import org.newrelic.domain.operations.OperationValidator;
 
 public class Move {
 
@@ -9,10 +10,15 @@ public class Move {
     private Plateau plateau;
     private String orientation;
 
-    public Move(Robot robot, Plateau plateau) {
-        this.robot = robot;
-        this.plateau = plateau;
-        orientation = robot.getCardinal().getOrientation();
+    public static Move build(Plateau plateau, Snippet snippet) {
+        if (snippet.getX() > plateau.getX() || snippet.getY() > plateau.getY()) {
+            return null;
+        }
+
+        Position position = new Position(snippet.getX(), snippet.getY());
+        Cardinal cardinal = new Cardinal(snippet.getCardinal());
+        Robot robot = new Robot(position, cardinal);
+        return new Move(robot, plateau);
     }
 
     public void incrementXPosition() {
@@ -31,21 +37,31 @@ public class Move {
         this.getRobot().getPosition().setY(this.getRobot().getPosition().getY() - 1);
     }
 
-    public void moveRobotWithOperations(String operations) {
+    public boolean moveRobotWith(String operations) {
         OperationsRegister operationsRegister = new OperationsRegister();
         for (int k = 0; k < operations.length(); k++) {
             final String operation = String.valueOf(operations.charAt(k));
+
+            boolean isValidOrientation = OperationValidator.validate(operation);
+            if (!isValidOrientation) {
+                return false;
+            }
+
             IOperationHandler operationHandler = operationsRegister.handle().get(operation);
-            operationHandler.validateOperation(this);
+            boolean isValid = operationHandler.executeOperation(this);
+            if (!isValid) {
+                return false;
+            }
         }
+        return true;
     }
 
-    public static Move buildMove(Plateau plateau, Snippet snippet) {
-        Position position = new Position(snippet.getX(), snippet.getY());
-        Cardinal cardinal = new Cardinal(snippet.getCardinal());
-        Robot robot = new Robot(position, cardinal);
-        return new Move(robot, plateau);
+    private Move(Robot robot, Plateau plateau) {
+        this.robot = robot;
+        this.plateau = plateau;
+        orientation = robot.getCardinal().getOrientation();
     }
+
 
     public void changeOrientationToWest() {
         this.orientation = Contants.WEST;
